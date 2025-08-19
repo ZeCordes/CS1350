@@ -1,7 +1,6 @@
-# My Python Learning Journey
-This repository contains my Python programming
-exercises and projects.
+This repository contains my Python programming exercises and projects for CS1350.
+
 ## About Me
-- Name: [Your Name]
-- Course: [Your Course]
-- School: [Your School]
+- Name: Devean Cordes
+- Course: Comuter Science 2
+- School: Indiana Tech

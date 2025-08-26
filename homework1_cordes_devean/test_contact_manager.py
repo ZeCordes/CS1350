@@ -18,8 +18,11 @@ contact = {
     'created_date': time.strftime('%Y-%m-%d'),
     'last_modified': time.strftime('%Y-%m-%d')
 }
+
+# DISPLAY TEST
 id = ctdb.add_contact(contact_db, contact)
 print(id)
 print(contact_db)
 ctdb.display_contact(contact_db, id)
 ctdb.list_all_contacts(contact_db)
+# END DISPLAY TEST

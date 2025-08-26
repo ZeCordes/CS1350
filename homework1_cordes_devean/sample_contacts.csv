@@ -1,2 +1,2 @@
-id,first_name,last_name,phone
-contact_000000001,Devean,Cordes,123-123-1234
+id,first_name,last_name,phone,email,add_street,add_city,add_state,add_zip,category,notes,created_date,last_modifed
+contact_000000001,Devean,Cordes,123-123-1234,deveandcordes@gmail.com,,,,,personal,cool guy,2025-08-26,2025-08-26

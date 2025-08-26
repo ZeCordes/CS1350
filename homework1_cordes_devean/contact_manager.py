@@ -111,5 +111,5 @@ def list_all_contacts(contacts_db):
     Args:
     contacts_db (dict): The main contacts database
     """
-    for id, contact in contact_db.items():
+    for id, contact in contacts_db.items():
         print(f"{id}: {contact['first_name']} {contact['last_name']} - {contact['phone']}")

@@ -104,9 +104,9 @@ def display_contact(contacts_db: dict[str, dict[str, str|dict]], contact_id: str
             print(key.replace('_', ' ').title() + ': ' + value)
         elif type(value) is dict: # address case
             if any(contact[key].values()):
-                print(key.replace('_', ' ').title() + ':\n')
+                print(key.replace('_', ' ').title() + ':')
                 for addr_key, addr_value in contact['address'].items():
-                    print(addr_key.replace('_', ' ').title() + ': ' + addr_value)
+                    print('\t' + addr_key.replace('_', ' ').title() + ': ' + addr_value)
                 print('\n')
 
 

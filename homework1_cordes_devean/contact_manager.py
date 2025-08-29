@@ -8,32 +8,35 @@ def create_contact() -> dict[str, str|dict]:
     
     returns: contact: dict[str, str|dict]
     """
-    first_name = input("Enter contact's first name: ").strip()
-    while first_name == '':
-        print("Error - first name is required")
-        first_name = input("Enter contact's first name: ").strip()
+    while True:
+        first_name = input("Enter contact's last name: ").strip()
+        if first_name != '':
+            break
+        else:
+            print("Error - last name is required")
     
-    last_name = input("Enter contact's first name: ").strip()
-    while last_name == '':
-        print("Error - last name is required")
+    while True:
         last_name = input("Enter contact's last name: ").strip()
+        if last_name != '':
+            break
+        else:
+            print("Error - last name is required")
     
-    phone_number = input("Enter contact's phone number: ").strip()
-    _valid = re.match('(\+\d+\s?)?\(?\d{3}[-.)]\s?\d{3}\s?[-.]\s?\d{4}', phone_number) #regex is modified from an example by jengle-dev on github
-    while not _valid:
-        if phone_number == '':
+    while True:
+        phone_number = input("Enter contact's phone number: ").strip()
+        if re.match('\d{3}-\d{3}-\d{4}', phone_number):
+            break
+        elif phone_number == '':
             print("Error - phone number is required")
         else:
-            print("Error - phone number is not valid")
+            print("Error - phone number is not valid, must be in XXX-XXX-XXXX format")
         
-        phone_number = input("Enter contact's phone number: ").strip()
-        _valid = re.match('(\+\d+\s?)?\(?\d{3}[-.)]\s?\d{3}\s?[-.]\s?\d{4}', phone_number) #regex is modified from an example by jengle-dev on github
     
     email = input("Enter contact's email: ")
     
     category_index = input("Category to enter contact into: 1 for personal, 2 for work, 3 for family").strip()
     category_index = int(category_index) if category_index.isdecimal() else 0
-    category = ['none', 'personal', 'work', 'family'][category_index if category_index >= 1 and category_index <= 3 else 0]
+    category = ['', 'personal', 'work', 'family'][category_index if category_index >= 1 and category_index <= 3 else 0]
     
     do_address = input("Do you want to add address to contact info (y/n): ").strip().lower() in ['y', 'yes']
     
@@ -165,6 +168,7 @@ def update_contact(contacts_db: dict[str, dict[str, str|dict]], contact_id: str,
         contact['last_modified'] = time.strftime('%Y-%m-%d')
     return any_updated
 
+
 def delete_contact(contacts_db: dict[str, dict], contact_id: str) -> bool:
     """
     Remove a contact from the database with confirmation.
@@ -181,6 +185,7 @@ def delete_contact(contacts_db: dict[str, dict], contact_id: str) -> bool:
     else:
         del contacts_db[contact_id]
         return True
+
 
 def merge_dict(d1: dict[str, str|dict], d2: dict[str, str|dict], ignore_keys=[], path=''):
     merged_data = {}
@@ -207,6 +212,7 @@ def merge_dict(d1: dict[str, str|dict], d2: dict[str, str|dict], ignore_keys=[],
     
     return merged_data
 
+
 def merge_contacts(contacts_db: dict[str, dict[str, str|dict]], contact_id1: str, contact_id2: str) -> str:
     """
     Merge two contacts, keeping the most recent information.
@@ -230,3 +236,54 @@ def merge_contacts(contacts_db: dict[str, dict[str, str|dict]], contact_id1: str
     merged_contact = merge_dict(contact1, contact2, ['created_date', 'last_modified']) # time keys handeled by add_contact
     
     return add_contact(contacts_db, merged_contact)
+
+
+def search_contacts_by_name(contacts_db: dict[str, str|dict], search_term: str):
+    """
+    Search contacts by first or last name (case-insensitive partial match).
+    Args:
+    contacts_db (dict): The main contacts database
+    search_term (str): Name to search for
+    Returns:
+    dict: Dictionary of matching contacts {contact_id: contact_data}
+    """
+    result_db = {}
+    for contact_id, contact in contacts_db.items():
+        name = contact['first_name'] + ' ' + contact['last_name']
+        if search_term.lower() in name.lower():
+            result_db[contact_id] = contact
+    
+    return result_db
+
+
+def search_contacts_by_category(contacts_db: dict[str, str|dict], category: str):
+    """
+    Find all contacts in a specific category.
+    Args:
+    contacts_db (dict): The main contacts database
+    category (str): Category to filter by
+    Returns:
+    dict: Dictionary of matching contacts
+    """
+    result_db = {}
+    for contact_id, contact in contacts_db.items():
+        if category == contact['category']:
+            result_db[contact_id] = contact
+    
+    return result_db
+
+
+def find_contact_by_phone(contacts_db: dict[str, str|dict], phone_number: str):
+    """
+    Find contact by phone number (exact match).
+    Args:
+    contacts_db (dict): The main contacts database
+    phone_number (str): Phone number to search for
+    Returns:
+    tuple: (contact_id, contact_data) if found, (None, None) if not found
+    """
+    for contact_id, contact in contacts_db.items():
+        if phone_number == contact['phone']:
+            return contact_id, contact
+    
+    return None, None

@@ -75,38 +75,19 @@ ctdb.delete_contact(contact_db, odd_id)
 # END MERGE TEST
 
 print('\n\n\n')
-dummy1_contact = {
+dummy1_contact = ctdb.complete_partial({
     'first_name': 'Dummy',
     'last_name': 'One',
     'phone': '555-000-0001',
-    'email': '',
-    'address': {
-        'street': '',
-        'city': '',
-        'state': '',
-        'zip_code': ''
-    },
     'category': 'personal', # 'personal', 'work', 'family'
-    'notes': '',
-    'created_date': time.strftime('%Y-%m-%d'),
-    'last_modified': time.strftime('%Y-%m-%d')
-}
-dummy2_contact = {
+})
+dummy2_contact = ctdb.complete_partial({
     'first_name': 'Dummy',
     'last_name': 'Two',
     'phone': '555-000-0002',
-    'email': '',
-    'address': {
-        'street': '',
-        'city': '',
-        'state': '',
-        'zip_code': ''
-    },
     'category': 'personal', # 'personal', 'work', 'family'
-    'notes': '',
-    'created_date': time.strftime('%Y-%m-%d'),
-    'last_modified': time.strftime('%Y-%m-%d')
-}
+})
+
 dummy1_id = ctdb.add_contact(contact_db, dummy1_contact)
 dummy2_id = ctdb.add_contact(contact_db, dummy2_contact)
 
@@ -123,3 +104,4 @@ print()
 print(by_number) #tuple
 print()
 print(invalid) # None, None tuple (if correct)
+# END SEARCH TEST

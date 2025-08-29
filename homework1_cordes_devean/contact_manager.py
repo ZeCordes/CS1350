@@ -58,6 +58,28 @@ def create_contact() -> dict[str, str|dict]:
     }
 
 
+BLANK_CONTACT = {'first_name': 'required', 'last_name': 'required', 'phone': 'required',
+    'email': '', 'category': '', 'notes': '',
+    'address': {'street': '', 'city': '', 'state': '', 'zip_code': ''}
+}
+
+
+def complete_partial(partial_contact: dict[str, str|dict]) -> dict[str, str|dict]:
+    # assumes the address is fully complete if present
+    
+    if 'first_name' not in partial_contact or 'last_name' not in partial_contact or 'phone' not in partial_contact:
+        raise ValueError('partial pontact is missing required fields')
+
+    complete_contact = {key: (partial_contact[key] if key in partial_contact else BLANK_CONTACT[key]) for key in BLANK_CONTACT.keys()}
+    if complete_contact['category'] not in ['', 'personal', 'work', 'family']:
+        complete_contact['category'] = ''
+    
+    complete_contact['created_date'] = time.strftime('%Y-%m-%d')
+    complete_contact['last_modified'] = time.strftime('%Y-%m-%d')
+    
+    return complete_contact
+    
+
 def add_contact(contacts_db: dict[str, dict], contact_data: dict) -> str:
     """
     Add a new contact to the database.

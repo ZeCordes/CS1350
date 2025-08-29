@@ -67,6 +67,8 @@ def add_contact(contacts_db: dict[str, dict], contact_data: dict) -> str:
     Returns:
         str: The generated contact ID, or None if addition failed
     """
+    contact_data = contact_data.copy() # dont edit original contact dict when doing db functions
+    
     num_id = random.randint(1, 999999999)
     contact_id = "contact_" + "0" * (9 - len(str(num_id))) + str(num_id)
     
@@ -78,7 +80,14 @@ def add_contact(contacts_db: dict[str, dict], contact_data: dict) -> str:
     
     if contact_id in contacts_db:
         return None
-        
+    
+    # if doesn't have created_date and/or last_modifed add them with current time
+    if 'created_date' not in contact_data:
+        contact_data['created_date'] = time.strftime('%Y-%m-%d')
+        contact_data['last_modified'] = time.strftime('%Y-%m-%d') # does edit the contact so set last_modifed even if it already has one
+    elif 'last_modified' not in contact_data:
+        contact_data['last_modified'] = time.strftime('%Y-%m-%d')
+    
     contacts_db[contact_id] = contact_data
     return contact_id
 
@@ -173,6 +182,30 @@ def delete_contact(contacts_db: dict[str, dict], contact_id: str) -> bool:
         del contacts_db[contact_id]
         return True
 
+def merge_dict(d1: dict[str, str|dict], d2: dict[str, str|dict], ignore_keys=[], path=''):
+    merged_data = {}
+    for key, value in d1.items():
+        if key in ignore_keys:
+            continue
+        
+        if type(value) is str:
+            if value == d2[key]: # both are the same (including both blank)
+                merged_data[key] = value
+            elif value == '' and d2[key] != '':
+                merged_data[key] = d2[key]
+            elif value != '' and d2[key] == '':
+                merged_data[key] = value
+            else: # both are different and non-blank (prompt user for conflict)
+                while True:
+                    user_choice = input(f"Conflicting data in merge on index {path}{key}!\nChoose {value} (1) or {d2[key]} (2): ").strip()
+                    if user_choice in ['1', '2']:
+                        merged_data[key] = [value, d2[key]][int(user_choice) - 1]
+                        break
+        
+        elif type(value) is dict:
+            merged_data[key] = merge_dict(value, d2[key], path = path + f'{key}/') # should only infinitely recurse if the dict or a sub-dict contains itself
+    
+    return merged_data
 
 def merge_contacts(contacts_db: dict[str, dict[str, str|dict]], contact_id1: str, contact_id2: str) -> str:
     """
@@ -194,18 +227,6 @@ def merge_contacts(contacts_db: dict[str, dict[str, str|dict]], contact_id1: str
     contact1 = contacts_db[contact_id1]
     contact2 = contacts_db[contact_id2]
     
+    merged_contact = merge_dict(contact1, contact2, ['created_date', 'last_modified']) # time keys handeled by add_contact
     
-    merged_data = {}
-    for key, value in contact1.items():
-        if type(value) is str:
-            if value == contact2[key]: # both are the same (including both blank)
-                merged_data[key] = value
-            elif value == '' and contact2[key] != '':
-                merged_data[key] = contact2[key]
-            elif value != '' and contact2[key] == '':
-                merged_data[key] = value
-            else: # both are different and non-blank
-                pass # TODO: prompt user for conflicts
-            
-    
-    return add_contact(contacts_db, merged_data)
+    return add_contact(contacts_db, merged_contact)

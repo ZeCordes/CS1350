@@ -1,6 +1,7 @@
 import time
 import re
 import random
+import csv
 
 def create_contact() -> dict[str, str|dict]:
     """
@@ -132,7 +133,7 @@ def display_contact(contacts_db: dict[str, dict[str, str|dict]], contact_id: str
         return False
 
     contact = contacts_db[contact_id]
-    print(f"Contact of contact with unique id {contact_id}:")
+    print(f"Contact with unique id {contact_id}:")
     for key, value in contact.items():
         if type(value) is str:
             print(key.replace('_', ' ').title() + ': ' + value)
@@ -309,3 +310,81 @@ def find_contact_by_phone(contacts_db: dict[str, str|dict], phone_number: str):
             return contact_id, contact
     
     return None, None
+
+
+def save_contacts_to_file(contacts_db, filename):
+    """
+    Save contacts database to a csv file.
+    """
+    # id,first_name,last_name,phone,email,addr_street,addr_city,addr_state,addr_zip,category,notes,created_date,last_modifed
+
+    if contacts_db == {}:
+        print("No contacts to save.")
+        return
+
+    # add .csv to filename if it doesn't already end with it
+    if not filename.endswith('.csv'):
+        filename += '.csv'
+    
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['id', 'first_name', 'last_name', 'phone', 'email', 'addr_street', 'addr_city', 'addr_state', 'addr_zip', 'category', 'notes', 'created_date', 'last_modified'])
+        for contact_id, contact in contacts_db.items():
+            writer.writerow([
+                contact_id,
+                contact['first_name'],
+                contact['last_name'],
+                contact['phone'],
+                contact['email'],
+                contact['address']['street'],
+                contact['address']['city'],
+                contact['address']['state'],
+                contact['address']['zip_code'],
+                contact['category'],
+                contact['notes'],
+                contact['created_date'],
+                contact['last_modified']
+            ])
+    
+    print(f"Contacts saved to {filename}")
+
+def load_contacts_from_file(filename):
+    """
+    Load contacts database from a csv file.
+    Return empty dict if file doesn't exist.
+    """
+    # id,first_name,last_name,phone,email,addr_street,addr_city,addr_state,addr_zip,category,notes,created_date,last_modifed
+    
+    # add .csv to filename if it doesn't already end with it
+    if not filename.endswith('.csv'):
+        filename += '.csv'
+    
+    contacts_db = {}
+    try:
+        with open(filename, 'r') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                contact_id = row['id']
+                contact = {
+                    'first_name': row['first_name'],
+                    'last_name': row['last_name'],
+                    'phone': row['phone'],
+                    'email': row['email'],
+                    'address': {
+                        'street': row['addr_street'],
+                        'city': row['addr_city'],
+                        'state': row['addr_state'],
+                        'zip_code': row['addr_zip']
+                    },
+                    'category': row['category'],
+                    'notes': row['notes'],
+                    'created_date': row['created_date'],
+                    'last_modified': row['last_modified']
+                }
+                contacts_db[contact_id] = contact
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        print(f"Error loading contacts from file: {e}")
+    
+    return contacts_db # will be empty if file doesn't exist

@@ -105,3 +105,23 @@ print(by_number) #tuple
 print()
 print(invalid) # None, None tuple (if correct)
 # END SEARCH TEST
+
+print('\n\n\n')
+
+# IMPORT TEST
+sample_db = ctdb.load_contacts_from_file('sample_contacts.csv') # get small sample db with just devean and a dummy
+ctdb.list_all_contacts(sample_db)
+devean_id = list(ctdb.search_contacts_by_name(sample_db, 'devean').keys())[0] # just grab first id key from search results
+ctdb.display_contact(sample_db, devean_id)
+print() # add extra line for clarity with invalid test
+
+invalid_name_db = ctdb.load_contacts_from_file('invalid_name_contacts.csv') # not a valid csv, should return empty dict
+print(invalid_name_db) # {}
+# END IMPORT TEST
+
+print('\n\n\n')
+
+# EXPORT TEST
+ctdb.save_contacts_to_file(contact_db, 'exported_contacts.csv')
+print('just go check the file idk')
+# END EXPORT TEST

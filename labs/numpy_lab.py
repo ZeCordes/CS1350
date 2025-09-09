@@ -75,6 +75,72 @@ def exercise_1_1():
         return array_range, array_linear, identity_matrix, random_matrix
 
 
+def exercise_2_1():
+    """
+    Compare performance between NumPy arrays and Python lists.
+    Create visualizations showing the speed difference.
+    """
+    
+    print("\n" + "="*50)
+    print("Exercise 2.1: The Great Performance Race!")
+    print("="*50)
+    
+    # Test different sizes
+    sizes = [10**i for i in range(2,8)]
+    python_times = []
+    numpy_times = []
+    
+    for size in sizes:
+        # Create data
+        python_list = list(range(size))
+        numpy_array = np.arange(size)
+        
+        start = time.time()
+        python_result = [x**2 for x in python_list]
+        python_time = time.time() - start
+        python_times.append(python_time)
+        
+        start = time.time()
+        numpy_result = numpy_array ** 2
+        numpy_time = time.time() - start
+        numpy_times.append(numpy_time)
+        
+        # Calculate speedup
+        speedup = python_time / numpy_time if numpy_time > 0 else 0
+        print(f"Size {size:6}: Python: {python_time:.4f}s, NumPy: {numpy_time:.4f}s, Speedup: {speedup:.1f}x")
+    
+    print(python_times)
+    print(numpy_times)
+    
+    # Create visualization
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    
+    # Plot 1: Time comparison
+    x = np.arange(len(sizes))
+    width = 0.35
+    ax1.bar(x - width/2, python_times, width, label='Python List', color='coral')
+    ax1.bar(x + width/2, numpy_times, width, label='NumPy Array', color='skyblue')
+    ax1.set_xlabel('Array Size')
+    ax1.set_ylabel('Time (seconds)')
+    ax1.set_title('Performance Comparison: Python vs NumPy')
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(sizes)
+    ax1.legend()
+    ax1.set_yscale('log') # Log scale for better visibility
+    
+    # Plot 2: Speedup factor
+    speedups = [p/n if n > 0 else 0 for p, n in zip(python_times, numpy_times)]
+    ax2.plot(sizes, speedups, 'go-', linewidth=2, markersize=10)
+    ax2.set_xlabel('Array Size')
+    ax2.set_ylabel('Speedup Factor')
+    ax2.set_title('NumPy Speedup Over Python Lists')
+    ax2.grid(True, alpha=0.3)
+    ax2.set_xscale('log')
+    plt.tight_layout()
+    plt.show()
+    return python_times, numpy_times
+
+
 def exercise_3_2():
     """
     Use broadcasting to create beautiful color gradients.
@@ -129,6 +195,9 @@ def exercise_3_2():
 
 # Run exercise 1_1
 arrays = exercise_1_1()
+
+# Performance Comparison (2_1)
+exercise_2_1()
 
 # Create gradients (3_2)
 exercise_3_2()

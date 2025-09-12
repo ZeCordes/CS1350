@@ -13,21 +13,17 @@ def practice_2a_basic_stats():
     homework_scores = np.array([85, 92, 78, 95, 88, 73, 90, 82, 87, 91])
     print("Homework scores:", homework_scores)
 
-    # TODO 1: Calculate the average score
-    # Use: np.mean(homework_scores)
-    average = None # Replace None with your calculation
+    # Calculate the average score
+    average = np.mean(homework_scores)
 
-    # TODO 2: Find the highest score
-    # Use: np.max(homework_scores)
-    highest = None # Replace None with your calculation
+    # Find the highest score
+    highest = np.max(homework_scores)
 
-    # TODO 3: Find the lowest score
-    # Use: np.min(homework_scores)
-    lowest = None # Replace None with your calculation
+    # Find the lowest score
+    lowest = np.min(homework_scores)
 
-    # TODO 4: Calculate total points earned
-    # Use: np.sum(homework_scores)
-    total = None # Replace None with your calculation
+    # Calculate total points earned
+    total = np.sum(homework_scores)
     
     print(f"Average score: {average}")
     print(f"Highest score: {highest}")

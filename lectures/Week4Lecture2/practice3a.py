@@ -23,21 +23,18 @@ def practice_3a_sales_data():
     print("Store B:", sales[1])
     print("Store C:", sales[2])
 
-    # TODO 1: Calculate total sales for each store
-    # Use: np.sum(sales, axis=1)
-    store_totals = None # Replace None
+    # Calculate total sales for each store
+    store_totals = np.sum(sales, axis=1)
 
-    # TODO 2: Calculate average daily sales across all stores
-    # Use: np.mean(sales, axis=0)
-    daily_averages = None # Replace None
+    # Calculate average daily sales across all stores
+    daily_averages = np.mean(sales)
 
-    # TODO 3: Find the highest single day sales
-    # Use: np.max(sales)
-    highest_sale = None # Replace None
+    # Find the highest single day sales
+    highest_sale = np.max(sales)
 
-    # TODO 4: Calculate total sales for the entire week
-    # Use: np.sum(sales)
-    total_sales = None # Replace None
+    # Calculate total sales for the entire week
+    total_sales = np.sum(sales)
+    
     print(f"\nStore totals: {store_totals}")
     print(f"Daily averages: {daily_averages}")
     print(f"Highest single day: ${highest_sale}")

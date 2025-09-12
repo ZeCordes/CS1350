@@ -14,21 +14,17 @@ def practice_2b_shopping_analysis():
     item_prices = np.array([5.99, 12.50, 3.25, 8.75, 15.00, 7.50, 4.99, 9.99])
     print("Item prices: $", item_prices)
 
-    # TODO 1: Calculate total cost
-    # Use: np.sum(item_prices)
-    total_cost = None # Replace None
+    # Calculate total cost
+    total_cost = np.sum(item_prices)
 
-    # TODO 2: Find the most expensive item
-    # Use: np.max(item_prices)
-    most_expensive = None # Replace None
+    # Find the most expensive item
+    most_expensive = np.max(item_prices)
 
-    # TODO 3: Find the cheapest item
-    # Use: np.min(item_prices)
-    cheapest = None # Replace None
+    # Find the cheapest item
+    cheapest = np.min(item_prices)
 
-    # TODO 4: Calculate average item price
-    # Use: np.mean(item_prices)
-    average_price = None # Replace None
+    # Calculate average item price
+    average_price = np.mean(item_prices)
     
     print(f"Total cost: ${total_cost:.2f}")
     print(f"Most expensive item: ${most_expensive:.2f}")

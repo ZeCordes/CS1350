@@ -28,33 +28,30 @@ def practice_6_student_gradebook():
         print()
         
     # TODO 1: Calculate each student's average (per row)
-    # Use: np.mean(grades, axis=1)
-    student_averages = None # Replace None
+    student_averages = np.mean(grades, axis=1)
 
     # TODO 2: Calculate each assignment's average (per column)
-    # Use: np.mean(grades, axis=0)
-    assignment_averages = None # Replace None
+    assignment_averages = np.mean(grades, axis=0)
 
     # TODO 3: Find the highest grade in the class
-    # Use: np.max(grades)
-    highest_grade = None # Replace None
+    highest_grade = np.max(grades)
 
     # TODO 4: Count how many students have an average >= 85
     # First calculate student_averages, then use >= 85
     if student_averages is not None:    
-        honor_roll = None # student_averages >= 85
-        num_honor_roll = None # np.sum(honor_roll)
+        honor_roll = student_averages >= 85
+        num_honor_roll = np.sum(honor_roll)
 
     # TODO 5: Add 5 bonus points to all grades (but cap at 100)
-    # Use: np.minimum(grades + 5, 100)
-    curved_grades = None # Replace None
+    curved_grades = np.minimum(grades + 5, 100)
 
     # Print your results
     print("\n--- ANALYSIS RESULTS ---")
     if student_averages is not None:
         print(f"Student averages: {student_averages}")
     if assignment_averages is not None:
-        print(f"Assignment averages: {assignment_averages}")
+        with np.printoptions(precision=2):
+            print(f"Assignment averages: {assignment_averages}")
     if highest_grade is not None:
         print(f"Highest grade: {highest_grade}")
     if 'num_honor_roll' in locals() and num_honor_roll is not None:

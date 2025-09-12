@@ -15,22 +15,18 @@ def practice_5a_temperature_analysis():
         77, 73, 70, 69, 74, 78, 76])
 
     print("Two weeks of temperatures:", temps)
-    # TODO 1: Find how many days were above 75°F
-    # Use: np.sum(temps > 75)
-    hot_days = None # Replace None
+    # Find how many days were above 75°F
+    hot_days = np.sum(temps >  75)
 
-    # TODO 2: Find the temperatures on cool days (below 70°F)
-    # Use: temps[temps < 70]
-    cool_temps = None # Replace None
+    # Find the temperatures on cool days (below 70°F)
+    cool_temps = temps[temps < 70]
 
-    # TODO 3: Find days with perfect weather (70-75°F)
-    # Use: (temps >= 70) & (temps <= 75)
-    perfect_days = None # Replace None
-    num_perfect = None # Use np.sum on perfect_days
+    # Find days with perfect weather (70-75°F)
+    perfect_days = (temps >= 70) & (temps <= 75)
+    num_perfect = sum(perfect_days)
 
-    # TODO 4: Find the position of the hottest day
-    # Use: np.argmax(temps)
-    hottest_day_index = None # Replace None
+    # Find the position of the hottest day
+    hottest_day_index = np.argmax(temps)
 
     print(f"Days above 75°F: {hot_days}")
     print(f"Cool day temperatures: {cool_temps}")

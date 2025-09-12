@@ -11,26 +11,25 @@ def practice_4b_grade_curve():
     print("="*50)
 
     # Test scores
-    scores = np.array([65, 72, 78, 81, 69, 75, 83, 77, 70, 68])
+    scores = np.array([65, 72, 78, 81, 69, 75, 83, 77, 70, 68, 94]) # added a 94 score to push one over 100 before capping
     print("Original scores:", scores)
 
-    # TODO 1: Add 10 points to all scores (curve)
-    # Use: np.add(scores, 10) or scores + 10
-    curved_scores = None # Replace None
+    # Add 10 points to all scores (curve)
+    curved_scores = scores + 10
 
-    # TODO 2: Make sure no score exceeds 100
-    # Use: np.minimum(curved_scores, 100)
+    # Make sure no score exceeds 100
     # This keeps the smaller of each score and 100
-    capped_scores = None # Replace None
+    capped_scores = np.minimum(curved_scores, 100)
     
-    # TODO 3: Calculate square root curve
+    # Calculate square root curve
     # Formula: new_score = sqrt(old_score) * 10
-    # Use: np.sqrt(scores) * 10
-    sqrt_curved = None # Replace None
+    sqrt_curved = (scores ** .5) * 10
 
     print(f"After +10 curve: {curved_scores}")
     print(f"Capped at 100: {capped_scores}")
-    print(f"Square root curve: {sqrt_curved}")
+    
+    with np.printoptions(precision=2):
+        print(f"Square root curve: {sqrt_curved}")
 
 # Run this exercise
 practice_4b_grade_curve()

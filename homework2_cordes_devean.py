@@ -188,57 +188,17 @@ def bonus_challenge():
 
 
 
-# Test all problems
+# Add this at the bottom of your file to test all problems (taken from pdf not convert)
 if __name__ == "__main__":
-    print("=" * 50)
-    print("TESTING ALL PROBLEMS")
-    print("=" * 50)
-    
-    try:
-        print("\nProblem 1 Results:")
-        for result in problem1():
-            print(result)
-            print()
-    except Exception as e:
-        print(f"Problem 1 Error: {e}")
-    
-    try:
-        print("\nProblem 2 Results:")
-        for result in problem2():
-            print(result)
-            print()
-    except Exception as e:
-        print(f"Problem 2 Error: {e}")
-    
-    try:
-        print("\nProblem 3 Results:")
-        for result in problem3():
-            print(result)
-            print()
-    except Exception as e:
-        print(f"Problem 3 Error: {e}")
-    
-    try:
-        print("\nProblem 4 Results:")
-        for result in problem4():
-            print(result)
-            print()
-    except Exception as e:
-        print(f"Problem 4 Error: {e}")
-    
-    try:
-        print("\nProblem 5 Results:")
-        for key, value in problem5().items():
-            print(key)
-            print(value)
-            print()
-    except Exception as e:
-        print(f"Problem 5 Error: {e}")
-    
-    try:
-        print("\nBonus Challenge Results:")
-        for result in bonus_challenge():
-            print(result)
-            print()
-    except Exception as e:
-        print(f"Bonus Challenge Error: {e}")
+    print("Problem 1 Results:")
+    print(problem1())
+    print("\nProblem 2 Results:")
+    print(problem2())
+    print("\nProblem 3 Results:")
+    print(problem3())
+    print("\nProblem 4 Results:")
+    print(problem4())
+    print("\nProblem 5 Results:") # problem 6 renamed to problem 5
+    print(problem5())
+    print("\nBonus Challenge Results:")
+    print(bonus_challenge())

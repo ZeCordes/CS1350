@@ -619,13 +619,44 @@ def practice_6_final_project():
     # Your code here:
     processed_text = sample_text  # Start with original
     
-    processed_text = ' '.join(processed_text.split())
-    processed_text = processed_text
+    # clean whitespace
+    processed_text = ' '.join(processed_text.strip().split()) # sadly deletes newlines
     
+    # stanardize case
+    punctuation = ['.', '!', '?']
+    words = processed_text.split()
+    for i, word in enumerate(words):
+        if i == 0:
+            words[i] = word.capitalize()
+            continue
+        
+        if words[i-1][-1] in punctuation: # if last char in previous word is punctuation
+            words[i] = word.capitalize()
+        else:
+            words[i] = word.lower()
+    
+    processed_text = ' '.join(words) # would also delete newlines
+    
+    
+    # extract email
+    at_sign = processed_text.find('@')
+    email_start = processed_text.rfind(' ', 0, at_sign) + 1
+    email_end = processed_text.find(' ', at_sign)
+    email = processed_text[email_start:email_end]
+    
+    # extract phone number
+    dash = processed_text.find('-')
+    phone_number_start = processed_text.rfind(' ', 0, dash) + 1
+    phone_number_end = processed_text.find(' ', dash)
+    phone_number = processed_text[phone_number_start:phone_number_end]
     
     
     print("\nProcessed text:")
     print(processed_text)
+    print("\nEmail:")
+    print(email)
+    print("\nPhone Number:")
+    print(phone_number)
 
 
 # ============================================================

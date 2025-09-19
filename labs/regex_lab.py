@@ -3,7 +3,7 @@ import re
 def practice_1a():
     # Find the word "dog" in the text
     text = "The dog barked at the mailman"
-    pattern = "___"  # Fill in the pattern
+    pattern = r"dog"  # Fill in the pattern
 
     result = re.search(pattern, text)
     if result:
@@ -19,9 +19,8 @@ def practice_1b():
 
 # Create a function that checks if a word exists in text
 def word_exists(text, word):
-    # Use re.search to check if word exists
-    # Return True if found, False otherwise
-    pass
+    return bool(re.search(word, text))
+        
 
 # Test your function
 def practice_1c():
@@ -31,7 +30,7 @@ def practice_1c():
 def practice_2a():
     # Match any vowel (a, e, i, o, u) in the text
     text = "Hello World"
-    pattern = r"[_____]"  # Fill in the vowels
+    pattern = r"[aeiou]"  # Fill in the vowels
 
     matches = re.findall(pattern, text.lower())
     print(f"Vowels found: {matches}")
@@ -41,17 +40,23 @@ def practice_2b():
     text = "Color code: #FF5A2B"
     # Write pattern to match hex digits
     # Hint: Use multiple ranges in one character class
+    pattern = r'[0-9A-Fa-f]'
+    
+    digits = re.findall(pattern, text)
+    print(digits)
     
 def practice_2c():
     # Extract all non-alphabetic characters from text
     text = "Hello, World! 123"
     # Write code to find all characters that are NOT letters
     # Print them as a list
+    pattern = r"[^A-Za-z]"
+    print(re.findall(pattern, text))
     
 def practice_3a():
     # Count how many digits are in the text
     text = "I have 2 cats and 3 dogs"
-    pattern = r"___"  # Fill in shorthand for digit
+    pattern = r"\d"  # Fill in shorthand for digit
 
     matches = re.findall(pattern, text)
     print(f"Number of digits: {len(matches)}")  
@@ -61,6 +66,8 @@ def practice_3b():
     text = "user@email.com has user_id=12345"
     # Use \w+ to find all word chunks
     # Expected: ['user', 'email', 'com', 'has', 'user_id', '12345']
+    pattern = r'\w+'
+    print(re.findall(pattern, text))
     
 def practice_3c():
     # Clean text by removing all non-word characters except spaces
@@ -69,6 +76,9 @@ def practice_3c():
     # syntax: re.sub(pattern, repl, string, count=0, flags=0)
     # usage: replace parts of a string that match a specific regular expression patter
     # Keep only words and spaces
+    pattern = r'[^\w\s]'
+    cleaned = re.sub(pattern, '', text)
+    print(cleaned)
     
 def practice_4a():
     # Check if string starts with "Python"
@@ -114,5 +124,21 @@ def practice_5c():
     # Write pattern to extract text between quotes
     # Use non-greedy matching
     # Expected: ['hello', 'goodbye']
-    
-practice_1a()
+
+
+if __name__ == '__main__':
+    practice_1a()
+    practice_1b()
+    practice_1c()
+    practice_2a()
+    practice_2b()
+    practice_2c()
+    practice_3a()
+    practice_3b()
+    practice_3c()
+    practice_4a()
+    practice_4b()
+    practice_4c()
+    practice_5a()
+    practice_5b()
+    practice_5c()

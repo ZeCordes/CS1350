@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 
 NEIGHBORS = [(-1, 0), (1, 0), (0, -1), (0, 1)] # no diagonals
@@ -8,6 +9,8 @@ grid_width = 20
 cell_size = 30
 
 root = tk.Tk()
+style = ttk.Style()
+style.theme_use('clam')
 canvas = tk.Canvas(root, width=grid_width * cell_size, height=grid_height * cell_size, bg="white")
 canvas.pack()
 

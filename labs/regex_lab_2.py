@@ -6,7 +6,7 @@ practice 1_a
 
 # Match years (exactly 4 digits)
 text = "Born in 1995, graduated 2017, now it's 24"
-pattern = r"\d{___}"  # Fill in the repetition
+pattern = r"\d{4}"  # Fill in the repetition
 
 matches = re.findall(pattern, text)
 print(f"Years found: {matches}")
@@ -17,7 +17,10 @@ practice 1_b
 # Validate hex color codes (#RGB or #RRGGBB)
 colors = ["#FFF", "#FFFFFF", "#12AB56", "#GGG", "#12"]
 # Write pattern for 3 or 6 hex digits after #
-# Hint: [0-9A-Fa-f]{3} or {6}
+pattern = r"#[0-9A-Fa-f]{3,6}"
+
+matches = re.findall(pattern, text)
+print(f"Valid colors: {matches}")
 
 '''
 practice 1_c
@@ -26,13 +29,14 @@ practice 1_c
 # Format: XXX-XX-XXXX where X is a digit
 text = "SSN: 123-45-6789, Invalid: 12-345-6789, 123-4-5678"
 # Write pattern using {n} for each section
+pattern = r"\d{3}-\d{3}-\d{4}"
 
 '''
 practice 2_a
 '''
 # Match repeated words like "very very" or "really really"
 text = "It's very very important and really really cool"
-pattern = r"(\w+) \1"  # Fill in to match repeated words
+pattern = r"(\w+) \1+"  # Fill in to match repeated words
 
 matches = re.findall(pattern, text)
 print(f"Repeated words: {matches}")
@@ -44,6 +48,7 @@ practice 2_b
 dates = ["12/25/2024", "01/01/2025", "13/40/2024"]
 # Write pattern with groups for month, day, year
 # Validate and extract each component
+pattern = r"\d{2}/\d{2}/\d{4}"
 
 '''
 practice 2_c

@@ -83,7 +83,7 @@ def practice_3c():
 def practice_4a():
     # Check if string starts with "Python"
     texts = ["Python is fun", "I love Python", "Python"]
-    pattern = r"____"  # Fill in pattern to match strings starting with Python
+    pattern = r"Python.*"  # Fill in pattern to match strings starting with Python
 
     for text in texts:
         if re.search(pattern, text):
@@ -94,6 +94,14 @@ def practice_4b():
     test_strings = ["12345", "123abc", "456"]
     # Write pattern to match strings that are entirely digits
     # Use ^ and $ anchors with \d+
+    pattern = r"^\d+$"
+    
+    valid_dict = {}
+    for text in test_strings:
+        valid_dict[text] = bool(re.match(pattern, text))
+    
+    print(valid_dict)
+        
     
 def practice_4c():
     # Find all three-letter words ending in 'at'
@@ -101,11 +109,13 @@ def practice_4c():
     # Use dot metacharacter and word boundaries
     # Word boundary: \b, can be at the beginning and end
     # Expected: ['cat', 'sat', 'mat', 'bat']
+    pattern = r"\b.at\b"
+    print(re.findall(pattern, text))
     
 def practice_5a():
     # Find all words (one or more letters)
     text = "Hello 123 world 456"
-    pattern = r"[a-zA-Z]___"  # Fill in the quantifier
+    pattern = r"[a-zA-Z]+"  # Fill in the quantifier
 
     matches = re.findall(pattern, text)
     print(f"Words: {matches}")
@@ -117,6 +127,7 @@ def practice_5b():
     # Write pattern using ? for optional area code
     # For a group of characters to be optional inside an re pattern
     # use () to group the set of characters
+    pattern = r"(\d{3})?\d{3}-\d{4}"
     
 def practice_5c():
     # Extract content between quotes (non-greedy)

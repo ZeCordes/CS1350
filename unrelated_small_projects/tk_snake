@@ -45,13 +45,13 @@ class SnakeGame:
         canvas.after(100, game.game_tick)
     
     def on_key_press(self, event):
-        if event.char == 'w':
+        if event.char == 'w' and self.heading != (1, 0):
             self.move_queue = (-1, 0)
-        elif event.char == 'a':
+        elif event.char == 'a' and self.heading != (0, 1):
             self.move_queue = (0, -1)
-        elif event.char == 's':
+        elif event.char == 's' and self.heading != (-1, 0):
             self.move_queue = (1, 0)
-        elif event.char == 'd':
+        elif event.char == 'd' and self.heading != (0, -1):
             self.move_queue = (0, 1)
 
 root = tk.Tk()

@@ -1,0 +1,85 @@
+import tkinter as tk
+import numpy as np
+import random
+
+GRID_HEIGHT = 20
+GRID_WIDTH = 20
+CELL_SIZE = 30
+
+class Explode(BaseException):
+    def __init__(self, message="how dare you"):
+        self.message = message
+        super().__init__(self.message)
+
+class SnakeGame:
+    def __init__(self):
+        self.board = np.zeros((GRID_WIDTH, GRID_HEIGHT))
+        self.board[10, 4] = 3
+        self.board[10, 3] = 2
+        self.board[10, 2] = 1
+        
+        self.apple = (10, 8)
+        
+        self.head = (10, 4)
+        self.heading = (0, 1)
+        self.length = 3
+        
+        self.move_queue = None
+    
+    def game_tick(self):
+        if self.move_queue:
+            self.heading = self.move_queue
+            self.move_queue = None
+        
+        self.head = ((self.head[0] + self.heading[0]) % GRID_HEIGHT, (self.head[1] + self.heading[1]) % GRID_WIDTH)
+        
+        if self.board[self.head] != 0:
+            self.__init__()
+        
+        self.board[self.head] = self.length + 1
+        
+        if self.head == self.apple:
+            self.length += 1
+            row_ind, col_ind = np.where(self.board == 0)
+            self.apple = random.choice(list(zip(row_ind, col_ind)))
+        else:
+            self.board = np.maximum(self.board - 1, 0)
+        
+        draw_grid()
+        canvas.after(100, game.game_tick)
+    
+    def on_key_press(self, event):
+        if event.char == 'w':
+            self.move_queue = (-1, 0)
+        elif event.char == 'a':
+            self.move_queue = (0, -1)
+        elif event.char == 's':
+            self.move_queue = (1, 0)
+        elif event.char == 'd':
+            self.move_queue = (0, 1)
+
+root = tk.Tk()
+canvas = tk.Canvas(root, width=GRID_WIDTH * CELL_SIZE, height=GRID_HEIGHT * CELL_SIZE, bg="white")
+canvas.pack()
+
+game = SnakeGame()
+
+def draw_grid():
+    canvas.delete("all")
+    for r in range(GRID_HEIGHT):
+        for c in range(GRID_WIDTH):
+            x1 = c * CELL_SIZE
+            y1 = r * CELL_SIZE
+            x2 = x1 + CELL_SIZE
+            y2 = y1 + CELL_SIZE
+            canvas.create_rectangle(x1, y1, x2, y2, fill='red' if (r, c) == game.apple else 'lime' if game.board[r, c] > 0 else 'white', outline="black")
+
+root.after(1000, game.game_tick)
+
+root.bind('<Key-w>', game.on_key_press)
+root.bind('<Key-a>', game.on_key_press)
+root.bind('<Key-s>', game.on_key_press)
+root.bind('<Key-d>', game.on_key_press)
+
+draw_grid()
+root.mainloop()

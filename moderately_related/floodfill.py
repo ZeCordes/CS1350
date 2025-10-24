@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+import numpy as np
 
 
 NEIGHBORS = [(-1, 0), (1, 0), (0, -1), (0, 1)] # no diagonals
@@ -9,12 +9,11 @@ grid_width = 20
 cell_size = 30
 
 root = tk.Tk()
-style = ttk.Style()
-style.theme_use('clam')
 canvas = tk.Canvas(root, width=grid_width * cell_size, height=grid_height * cell_size, bg="white")
 canvas.pack()
 
-grid_colors = [["white" for _ in range(grid_width)] for _ in range(grid_height)]
+grid_colors = np.zeros((grid_height, grid_width), dtype=int)
+colour_map = ['white', 'black', 'red']
 
 # This state will hold the color we are painting with during a mouse drag.
 _paint_color = None
@@ -27,7 +26,7 @@ def draw_grid():
             y1 = r * cell_size
             x2 = x1 + cell_size
             y2 = y1 + cell_size
-            canvas.create_rectangle(x1, y1, x2, y2, fill=grid_colors[r][c], outline="black")
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colour_map[grid_colors[r, c]], outline="black")
 
 def in_bounds(row, col):
     # simple shorthand
@@ -44,10 +43,10 @@ def start_paint(event):
     row = event.y // cell_size
     if in_bounds(row, column):
         # Set the paint color based on the opposite of the clicked cell's color
-        if grid_colors[row][column] == "white":
-            _paint_color = "black"
+        if grid_colors[row, column] == 0:
+            _paint_color = 1
         else:
-            _paint_color = "white"
+            _paint_color = 0
         # Immediately paint the first cell
         paint_on_drag(event)
 
@@ -64,8 +63,8 @@ def paint_on_drag(event):
     column = event.x // cell_size
     row = event.y // cell_size
     # Only update and redraw if the cell is in bounds and its color is different
-    if in_bounds(row, column) and grid_colors[row][column] != _paint_color:
-        grid_colors[row][column] = _paint_color
+    if in_bounds(row, column) and grid_colors[row, column] != _paint_color:
+        grid_colors[row, column] = _paint_color
         draw_grid()
 
 def flood_fill(event):
@@ -73,8 +72,8 @@ def flood_fill(event):
     start_col = event.x // cell_size
     start_row = event.y // cell_size
     if in_bounds(start_row, start_col):
-        target_color = grid_colors[start_row][start_col]
-        new_color = "white" if target_color == "red" else "red"
+        target_color = grid_colors[start_row, start_col]
+        new_color = 0 if target_color == 2 else 2
     
         to_fill = set()
         to_fill.add((start_row, start_col))

@@ -6,10 +6,6 @@ GRID_HEIGHT = 20
 GRID_WIDTH = 20
 CELL_SIZE = 30
 
-class Explode(BaseException):
-    def __init__(self, message="how dare you"):
-        self.message = message
-        super().__init__(self.message)
 
 class SnakeGame:
     def __init__(self):

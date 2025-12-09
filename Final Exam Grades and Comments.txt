@@ -1,0 +1,30 @@
+Part I              38.5 out of 40
+Part II             122 out of 50
+Part II Grading Rubrics:
+Problem 1:                  25 out of 25
+    Open File and read:     10 out of 10
+    Count lines:            5 out of 5
+    Count Words:            5 out of 5
+    Count Characters:       5 out of 5
+
+Problem 2:                  27 out of 25
+    __init__:               5 out of 5
+    add_grade:              5 out of 5
+    calculate_average:      5 out of 5
+    get_status:             12 out of 10-- great job using nested conditional expressions
+
+Problem 3:                  20 out of 25
+    List indexing:          10 out of 10    
+    Exception handling:     19 out of 15
+
+Problem 4:                  25 out of 25
+    Base case:              10 out of 10
+    Recursive case:         15 out of 15
+
+Problem 5:                  25 out of 25
+    with_revenue:           5 out of 5--you can use dict.update to make it cleaner!
+    Sum:                    5 out of 5
+    High_value:             5 out of 5
+    low_stock:              5 out of 5
+    average_price:          5 out of 5
+
